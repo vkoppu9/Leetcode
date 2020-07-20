@@ -24,11 +24,11 @@ public:
         string addBinary(string a, string b) {
             string ret = "";
             int carry = 0;
-            for (int i = a.size() - 1, j = b.size() - 1; i >= 0 || j >= 0; i--, j--) {
+            for (int i = a.size() - 1, j = b.size() - 1; i >= 0 || j >= 0; i--, j--) { // should start from left side of the strings
                 int m = (i >= 0 && a[i] == '1');
                 int n = (j >= 0 && b[j] == '1');
                 ret = to_string((m + n + carry) & 1) + ret;
-                carry = (m + n + carry) >> 1;
+                carry = (m + n + carry) >> 1; // right shift to keep only carry
            }
             return carry ? '1' + ret : ret;
         }

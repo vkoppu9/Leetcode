@@ -8,6 +8,7 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+/*
 class Solution {
 public:
     ListNode* reverseBetween(ListNode* head, int m, int n) {
@@ -34,6 +35,7 @@ public:
         while(curr && count < n) {
             nextNode = curr->next;
             curr->next = prev;
+            
             prev = curr;
             curr = nextNode;
             count++;
@@ -44,5 +46,51 @@ public:
         start->next = prev;
         
         return dummy->next;
+    }
+};
+*/
+
+
+// Using Stack 
+
+class Solution {
+public:
+    
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        
+        // No need to reverse if left == right
+        if(left == right) 
+            return head;
+        
+        // hold left to right values in stack 
+        stack<int> st;
+        
+        // track the left node pointer
+        ListNode *prev = nullptr, *thead = head;
+        
+        // loop till right and save values in stack from left to right
+        // also save the left node pointer
+        int i = 1;
+        while(thead != nullptr && i <= right) {
+            if(i == left)
+                prev = thead;
+            
+            if(i >= left && i <= right)
+                st.push(thead->val);
+
+            i++;
+            thead = thead->next;
+        }
+        
+        // loop through left pointer to right and set value from stack top
+        int s = st.size()
+        for(int j = 0; j < s; j++) {
+            prev->val = st.top();
+            st.pop();
+            prev = prev->next;
+        }
+        
+        return head;
+            
     }
 };
